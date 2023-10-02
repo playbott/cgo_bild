@@ -80,7 +80,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern __declspec(dllexport) int JPEGEncode(char* cInPath, char* cOutPath, int cQuality);
+extern int JPEGEncode(char* cInPath, char* cOutPath, int cQuality);
 
 #ifdef __cplusplus
 }
