@@ -5,9 +5,8 @@ package main
 #include <stdint.h>
 */
 import "C"
-
 import (
-	"github.com/anthonynsimon/bild/imgio"
+	"cgo_bild/pkg/encoder"
 )
 
 func main() {
@@ -17,23 +16,17 @@ func main() {
 func JPEGEncode(cInPath *C.char, cOutPath *C.char, cQuality C.int) C.int {
 	inPath := C.GoString(cInPath)
 	outPath := C.GoString(cOutPath)
-	quality := CIntToGo(cQuality)
+	quality := cGoInt(cQuality)
 
-	image, err := imgio.Open(inPath)
+	err := encoder.JPEGFromDisc(inPath, outPath, quality)
 	if err != nil {
 		return C.int(-1)
 	}
-
-	if err := imgio.Save(outPath, image, imgio.JPEGEncoder(quality)); err != nil {
-		return C.int(-2)
-	}
-
 	return C.int(0)
 }
 
-func CIntToGo(n C.int) int {
+func cGoInt(n C.int) int {
 	var y *C.int = (*C.int)(C.malloc(C.sizeof_int))
 	*y = n
-	f := int(*y)
-	return f
+	return int(*y)
 }
