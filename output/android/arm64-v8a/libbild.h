@@ -80,7 +80,14 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern int JPEGEncode(char* cInPath, char* cOutPath, int cQuality);
+
+/* Return type for JPEGEncode */
+struct JPEGEncode_return {
+	void* r0;
+	int r1;
+	int r2;
+};
+extern struct JPEGEncode_return JPEGEncode(void* b, int s, int pQuality);
 
 #ifdef __cplusplus
 }
