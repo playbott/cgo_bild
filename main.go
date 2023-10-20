@@ -16,8 +16,11 @@ func main() {}
 func JPEGEncode(b unsafe.Pointer, s C.int, pQuality C.int) (unsafe.Pointer, C.int, C.int) {
 	inputFile := C.GoBytes(b, s)
 	quality := cGoInt(pQuality)
-	ptr, size, errorCode := api.JPEGEncode(inputFile, quality)
-	return ptr, C.int(size), C.int(errorCode)
+	ptr, size, err := api.JPEGEncode(inputFile, quality)
+	if err != nil {
+		return b, s, C.int(-1)
+	}
+	return ptr, C.int(size), C.int(0)
 }
 
 func cGoInt(n C.int) int {
