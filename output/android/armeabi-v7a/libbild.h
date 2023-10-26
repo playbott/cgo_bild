@@ -89,6 +89,22 @@ struct JPEGEncode_return {
 };
 extern struct JPEGEncode_return JPEGEncode(void* b, int s, int pQuality);
 
+/* Return type for BMPEncode */
+struct BMPEncode_return {
+	void* r0;
+	int r1;
+	int r2;
+};
+extern struct BMPEncode_return BMPEncode(void* b, int s);
+
+/* Return type for PNGEncode */
+struct PNGEncode_return {
+	void* r0;
+	int r1;
+	int r2;
+};
+extern struct PNGEncode_return PNGEncode(void* b, int s, int c);
+
 #ifdef __cplusplus
 }
 #endif

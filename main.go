@@ -14,10 +14,34 @@ func main() {}
 
 //export JPEGEncode
 func JPEGEncode(b unsafe.Pointer, s C.int, pQuality C.int) (unsafe.Pointer, C.int, C.int) {
-	inputFile := C.GoBytes(b, s)
+	inputData := C.GoBytes(b, s)
 	quality := cGoInt(pQuality)
-	ptr, size, errorCode := api.JPEGEncode(inputFile, quality)
-	return ptr, C.int(size), C.int(errorCode)
+	ptr, size, err := api.JPEGEncode(inputData, quality)
+	if err != nil {
+		return b, s, C.int(-1)
+	}
+	return ptr, C.int(size), C.int(0)
+}
+
+//export BMPEncode
+func BMPEncode(b unsafe.Pointer, s C.int) (unsafe.Pointer, C.int, C.int) {
+	inputData := C.GoBytes(b, s)
+	ptr, size, err := api.BMPEncode(inputData)
+	if err != nil {
+		return b, s, C.int(-1)
+	}
+	return ptr, C.int(size), C.int(0)
+}
+
+//export PNGEncode
+func PNGEncode(b unsafe.Pointer, s C.int, c C.int) (unsafe.Pointer, C.int, C.int) {
+	inputData := C.GoBytes(b, s)
+	colorDepth := cGoInt(c)
+	ptr, size, err := api.PNGEncode(inputData, colorDepth)
+	if err != nil {
+		return b, s, C.int(-1)
+	}
+	return ptr, C.int(size), C.int(0)
 }
 
 func cGoInt(n C.int) int {
